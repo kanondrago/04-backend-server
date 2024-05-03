@@ -5,7 +5,6 @@ const express = require('express');
 const cors = require('cors'); // Para aceptar peticiones de diferentes dominios
 const {dbConnection} = require('./database/config');
 
-
 // Creación de Express
 const app = express()
 
@@ -13,6 +12,11 @@ const app = express()
 // Para configurar de que dominio queremos recibir peticiones
 // Creación de lista blancas y negras
 app.use( cors() );
+
+// lectura y parseo del body para leer los requests (Middleware)
+// Colocar antes de las rutas
+app.use(express.json());
+
 
 // Base de datos
 dbConnection();
@@ -23,12 +27,8 @@ dbConnection();
 // mean_user
 
 // Rutas
-app.get('/', (req, res) => {
-  res.json({
-    ok: true,
-    msg: 'Holaaaa'
-  })
-})
+// definiendo un middleware
+app.use('/api/usuarios', require('./routes/usuarios.routes'));
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`)
