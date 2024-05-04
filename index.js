@@ -26,7 +26,9 @@ dbConnection();
 // awENMcQ8wwiqyNxg
 // mean_user
 
-// Rutas
+/*
+  RUTAS
+*/
 // definiendo un middleware
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 
