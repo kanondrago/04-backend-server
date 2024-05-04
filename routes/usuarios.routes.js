@@ -5,7 +5,7 @@
 // creando las rutas
 
 const { Router } = require('express');
-const { getUsuarios,crearUsuario }  = require('../controllers/usuarios')
+const { getUsuarios,crearUsuario }  = require('../controllers/usuarios.controllers')
 
 const router = Router();
 
