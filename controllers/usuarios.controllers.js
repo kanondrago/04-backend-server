@@ -15,43 +15,40 @@ const getUsuarios = async (req, res) => {
 
 }
 
-const crearUsuario = async (req, res) => {
-  
-  const { email } = req.body;
-  const usuario = new Usuario(req.body);
+const crearUsuario = async(req, res = response) => {
+
+  const { password, email, nombre } = req.body;
+
 
 
   try {
-    const existeEmail = await Usuario.findOne({email: email})
+      // validando un usuario
+      const existeEmail = await Usuario.findOne({email: email})
 
+      if(existeEmail) {
+        return res.status(400).json({
+          ok: false,
+          msg: 'El correo ya esta registrado'
+        })
+      }
 
-    if(existeEmail){
+      // usuario viene de models
+      const usuario = new Usuario(req.body);
+
+      // Para grabar en la base de datos
+      await usuario.save();
+
       res.json({
-        ok: false,
-        usuario: 'Esta cuenta ya se encuentra registrada'
+        ok: true,
+        usuario: usuario
       })
-      return 
-    }
-  
-    usuario.save();
-  
-    res.json({
-      ok: true,
-      usuario: usuario
-    })
-    
   } catch (error) {
     console.log(error);
-    res.json({
+    res.status(500).json({
       ok: false,
-      msg: "Algo fallo en el envio"
+      msg: 'Error inesperado ...'
     })
   }
-
-
-
-
-
 }
 
 
