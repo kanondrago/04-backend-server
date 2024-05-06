@@ -1,7 +1,5 @@
 const { response } = require('express');
-
-const Usuario = require('../models/usuario.models')
-
+const Usuario = require('../models/usuario.models');
 const getUsuarios = async (req, res) => {
 
   // las llaves vacias especifican un filtro
@@ -19,8 +17,6 @@ const crearUsuario = async(req, res = response) => {
 
   const { password, email, nombre } = req.body;
 
-
-
   try {
       // validando un usuario
       const existeEmail = await Usuario.findOne({email: email})
@@ -31,7 +27,6 @@ const crearUsuario = async(req, res = response) => {
           msg: 'El correo ya esta registrado'
         })
       }
-
       // usuario viene de models
       const usuario = new Usuario(req.body);
 
@@ -42,8 +37,8 @@ const crearUsuario = async(req, res = response) => {
         ok: true,
         usuario: usuario
       })
+
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       ok: false,
       msg: 'Error inesperado ...'

@@ -8,7 +8,7 @@ const {dbConnection} = require('./database/config');
 // Creación de Express
 const app = express()
 
-// Configurar CORS - Es un MiddleWare
+// Configurar CORS - Es un (MiddleWare)
 // Para configurar de que dominio queremos recibir peticiones
 // Creación de lista blancas y negras
 app.use( cors() );
@@ -29,7 +29,7 @@ dbConnection();
 /*
   RUTAS
 */
-// definiendo un middleware
+// definiendo un (Middleware)
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 
 app.listen(process.env.PORT, () => {
