@@ -1,5 +1,8 @@
 const { response } = require('express');
 const Usuario = require('../models/usuario.models');
+const bcryptjs = require('bcryptjs'); // se almacena todo el resultado del paquete en bcryptjs
+
+
 const getUsuarios = async (req, res) => {
 
   // las llaves vacias especifican un filtro
@@ -15,7 +18,7 @@ const getUsuarios = async (req, res) => {
 
 const crearUsuario = async(req, res = response) => {
 
-  const { password, email, nombre } = req.body;
+  const { password, email } = req.body;
 
   try {
       // validando un usuario
@@ -29,6 +32,11 @@ const crearUsuario = async(req, res = response) => {
       }
       // usuario viene de models
       const usuario = new Usuario(req.body);
+
+      // encriptar contraseña
+      const salt = bcryptjs.genSaltSync(); // creando la salt
+      usuario.password = bcryptjs.hashSync(password, salt); // encriptando con el password y la salt
+      // fin encriptar contraseña
 
       // Para grabar en la base de datos
       await usuario.save();
