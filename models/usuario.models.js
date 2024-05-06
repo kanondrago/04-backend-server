@@ -34,7 +34,7 @@ const UsuarioSchema = Schema({
 
 // depurando el modelo para recibir un get
 UsuarioSchema.method('toJSON', function() {
-    const { __v, _id, ...object } = this.toObject();
+    const { __v, _id, password,...object } = this.toObject();
 
     // para tener un uid
     object.uid = _id;
