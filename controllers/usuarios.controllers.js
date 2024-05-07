@@ -77,14 +77,12 @@ const actualizarUsuario = async (req, res = response) => {
 
 
     // Actualizaciones
-    const campos = req.body
+    const {password, google, email, ...campos} = req.body
 
-    if(usuarioDB.email === req.body.email){
-      delete campos.email
-    }
-    else {
+    if(usuarioDB.email !== email){
+
       // Aca verificamos un usuario con el mismo correo electrónico
-      const existeEmail = await Usuario.findOne({ email: req.body.email });
+      const existeEmail = await Usuario.findOne({ email: email });
 
       if(existeEmail){
         // Si el mail existe en la base de datos, aquí se termina el código y envia un mensaje al cliente
@@ -95,10 +93,7 @@ const actualizarUsuario = async (req, res = response) => {
       }
     }
 
-    // Borrando los campos que no queremos que se modifiquen
-    delete campos.password;
-    delete campos.google;
-
+    campos.email = email;
     const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
 
     res.json({
