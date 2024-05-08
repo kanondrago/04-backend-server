@@ -1,6 +1,7 @@
 const { response } = require('express');
 const Usuario = require('../models/usuario.models');
 const bcryptjs = require('bcryptjs'); // se almacena todo el resultado del paquete en bcryptjs
+const { generarJWT } = require('../helpers/jwt')
 
 
 const getUsuarios = async (req, res) => {
@@ -38,12 +39,16 @@ const crearUsuario = async(req, res = response) => {
       usuario.password = bcryptjs.hashSync(password, salt); // encriptando con el password y la salt
       // fin encriptar contraseña
 
+      // crear el token
+      const token = await generarJWT(usuario.id);
+
       // Para guardar al usuario en la base de datos
       await usuario.save();
 
       res.json({
         ok: true,
-        usuario: usuario
+        usuario: usuario,
+        token: token
       })
 
   } catch (error) {
