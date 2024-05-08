@@ -8,12 +8,13 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { getUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario }  = require('../controllers/usuarios.controllers')
 const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 
 const router = Router();
 
 // obtener todos los usuarios
-router.get('/', getUsuarios)
+router.get('/', validarJWT, getUsuarios)
 
 // crear usuarios
 // en el arreglo se puede colocar tantos MIDDLEWARES como se desee
@@ -27,6 +28,7 @@ router.post('/', [
 
 // actualizar un usuario y también se configura sus validaciones en la sección de middleware
 router.put('/:id', [
+    validarJWT, // Primer middelware para validar el jwt
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('role', 'El role es obligatorio').not().isEmpty(),
     check('email', 'El correo electrónico está vacio o es invalido').isEmail(),
@@ -34,7 +36,7 @@ router.put('/:id', [
 ], actualizarUsuario)
 
 // eliminar un usuario con id
-router.delete('/:id', [], eliminarUsuario)
+router.delete('/:id', validarJWT, eliminarUsuario)
 
 
 // exportando el router

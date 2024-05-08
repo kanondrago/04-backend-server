@@ -31,6 +31,8 @@ const login = async(req, res = response) => {
                 msg: 'Password no valida'
             })
         }
+        // fin verificación de contraseña
+
 
         // generación de un token - JWT (Json Web Token)
         const token = await generarJWT(usuarioDB.id);
@@ -39,6 +41,7 @@ const login = async(req, res = response) => {
             ok: true,
             msg: token
         })
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({
