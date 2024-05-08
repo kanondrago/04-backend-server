@@ -12,7 +12,8 @@ const getUsuarios = async (req, res) => {
 
   res.json({
     ok: true,
-    usuarios: usuarios
+    usuarios: usuarios,
+    uid: req.uid,// se agrego en el middleware validar-jwt el req.uid
   })
 
 }
