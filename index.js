@@ -26,16 +26,26 @@ dbConnection();
 // awENMcQ8wwiqyNxg
 // mean_user
 
+
+
 /*
   RUTAS
 */
 // definiendo un (Middleware)
-// Rutas de usuarios
+///////////////////////
+// Rutas de usuarios //
+///////////////////////
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 // Rutas de login
 app.use('/api/login', require('./routes/auth.routes'));
 // Rutas de hospitales
 app.use('/api/hospitales', require('./routes/hospitales.routes'));
+// Rutas de medicos
+app.use('/api/medicos', require('./routes/medicos.routes'));
+///////////////////////////
+// Fin Rutas de usuarios //
+///////////////////////////
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`)

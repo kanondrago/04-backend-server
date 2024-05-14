@@ -16,7 +16,7 @@ const router = Router();
 // obtener todos los usuarios
 router.get('/', validarJWT, getUsuarios)
 
-// crear usuarios
+// crear un usuario
 // en el arreglo se puede colocar tantos MIDDLEWARES como se desee
 router.post('/', [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),
