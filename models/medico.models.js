@@ -11,6 +11,10 @@ const MedicoSchema = Schema({
     img: {
         type: String,
     },
+    usuario: {
+        type: Schema.Types.ObjectId, // Hay una relación con otro Schema
+        ref: 'Usuario',
+    },
     hospital: {
         type: Schema.Types.ObjectId, // Hay una relación con otro Schema
         ref: 'Hospital',
