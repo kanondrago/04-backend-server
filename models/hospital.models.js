@@ -1,6 +1,6 @@
 
 // haciendo destructuring
-const {Schema, model, Collection} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // definición del esquema
 const HospitalSchema = Schema({

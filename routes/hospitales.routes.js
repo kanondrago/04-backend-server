@@ -13,16 +13,16 @@ const { getHospitales, crearHospital, actualizarHospital, eliminarHospital } = r
 
 const router = Router();
 
-// obtener todos los usuarios
+// obtener todos los hospitales
 router.get('/', getHospitales)
 
-// crear usuarios
+// crear un hospital
 router.post('/', [], crearHospital);
 
-// actualizar un usuario y también se configura sus validaciones en la sección de middleware
+// actualizar un hospital y también se configura sus validaciones en la sección de middleware
 router.put('/:id', [], actualizarHospital)
 
-// eliminar un usuario con id
+// eliminar un hospital con id
 router.delete('/:id', eliminarHospital)
 
 
