@@ -1,6 +1,7 @@
 
 const {Schema, model} = require('mongoose');
 
+// definiendo el esquema del médico
 const MedicoSchema = Schema({
     nombre: {
         type: String,

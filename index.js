@@ -30,8 +30,12 @@ dbConnection();
   RUTAS
 */
 // definiendo un (Middleware)
+// Rutas de usuarios
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
+// Rutas de login
 app.use('/api/login', require('./routes/auth.routes'));
+// Rutas de hospitales
+app.use('/api/hospitales', require('./routes/hospitales.routes'));
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`)
