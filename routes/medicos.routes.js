@@ -17,7 +17,11 @@ const router = Router();
 router.get('/', getMedicos)
 
 // crear medico
-router.post('/', [], crearMedico);
+router.post('/', [
+    validarJWT,
+    check('nombre', 'El nombre del médico es necesario').not().isEmpty(),
+    validarCampos,
+], crearMedico);
 
 // actualizar un medico y también se configura sus validaciones en la sección de middleware
 router.put('/:id', [], actualizarMedico)
