@@ -1,14 +1,18 @@
 const { response } = require('express');
 const Hospital = require('../models/hospital.models');
+const Usuario = require('../models/usuario.models');
 const bcryptjs = require('bcryptjs'); // se almacena todo el resultado del paquete en bcryptjs
 const { generarJWT } = require('../helpers/jwt')
 
 
 const getHospitales = async (req, res = response) => {
 
+  const hospitales = await Hospital.find()
+    .populate('usuario', 'nombre email role img password')
+
   res.json({
     ok: true,
-    msg: 'Recibiendo hospitales'
+    msg: hospitales,
   })
 
 }
