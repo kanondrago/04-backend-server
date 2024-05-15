@@ -17,7 +17,11 @@ const router = Router();
 router.get('/', getHospitales)
 
 // crear un hospital
-router.post('/', [], crearHospital);
+router.post('/', [
+    validarJWT,
+    check('nombre', 'El nombre del hospital es necesario').not().isEmpty(),
+    validarCampos,
+], crearHospital);
 
 // actualizar un hospital y también se configura sus validaciones en la sección de middleware
 router.put('/:id', [], actualizarHospital)

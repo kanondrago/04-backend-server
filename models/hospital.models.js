@@ -6,7 +6,7 @@ const { Schema, model } = require('mongoose');
 const HospitalSchema = Schema({
     nombre: {
         type: String,
-        require: true
+        required: true
     },
     img: {
         type: String,
@@ -14,6 +14,7 @@ const HospitalSchema = Schema({
     usuario: {
         type: Schema.Types.ObjectId, // Hay una relación con otro Schema
         ref: 'Usuario',
+        required: true,
     }
 }, { collection: 'hospitales' }); // Para que aparesca en la base de datos hospitales
 // fin definición del esquema

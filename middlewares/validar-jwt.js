@@ -19,7 +19,7 @@ const validarJWT = (req, res, next) => {
         // verifica el token con la semilla --> JWT_SECRET
         // Si hay algún error en la verificación, el código se va al catch
         const { uid } = jwt.verify(token, process.env.JWT_SECRET);
-        req.uid = uid;
+        req.uid = uid; // despues de la verificación del token se agrega el uid al request (req).
         next();
 
     } catch (error) {

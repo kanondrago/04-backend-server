@@ -15,10 +15,28 @@ const getMedicos = async (req, res = response) => {
 
 const crearMedico = async(req, res = response) => {
 
-    res.json({
+    const uid = req.uid
+
+    const medico = new Medico(
+      {usuario: uid,...req.body}
+    );
+
+    try {
+
+      const medicoDB = await medico.save();
+
+      res.json({
+          ok: true,
+          medico: medicoDB
+        })
+    } catch (error) {
+      res.status(500).json({
         ok: true,
         msg: 'creando medicos'
       })
+    }
+
+
     
 }
 
