@@ -6,14 +6,43 @@ const { generarJWT } = require('../helpers/jwt')
 
 const getUsuarios = async (req, res) => {
 
+  // agregando paramentro --> Llamado query param
+  // el || 0  significa que envia un 0 si no hay valor
+  const desde = await Number(req.query.desde) || 0;
+
+  /* 
+  INICIO DE COMENTARIO
+
   // las llaves vacias especifican un filtro
   // la cadena verifica que columnas quieres devolver de la consulta
-  const usuarios = await Usuario.find({}, 'nombre email img role google')
+  const usuarios = await Usuario
+    .find({}, 'nombre email img role google')
+    .skip(desde)
+    .limit(5)
+  
+  // teniendo el total de registros se le aplica la funcion count()
+  const total = await Usuario.find().count();
+
+  FIN DE COMENTARIO
+  */ 
+
+  // INICIO DE CODIGO que sirve para hacer lo mismo que el codigo de bloque comentado
+
+  const [usuarios, total] = await Promise.all([
+    Usuario
+      .find({}, 'nombre email img role google')
+      .skip(desde)
+      .limit(5),
+    Usuario.find().count()
+  ])
+
+  // FIN DE CODIGO que sirve para hacer lo mismo que el codigo de bloque comentado
 
   res.json({
     ok: true,
     usuarios: usuarios,
     uid: req.uid,// se agrego en el middleware validar-jwt el req.uid
+    total: total // Agregando el total de usuarios
   })
 
 }
