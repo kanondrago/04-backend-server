@@ -36,7 +36,7 @@ const crearMedico = async(req, res = response) => {
     } catch (error) {
       res.status(500).json({
         ok: true,
-        msg: 'creando medicos'
+        msg: 'Error inesperado'
       })
     }
 
