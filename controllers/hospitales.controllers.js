@@ -23,7 +23,7 @@ const crearHospital = async(req, res = response) => {
 
     const hospital = new Hospital({
       usuario: uid,...req.body
-    }); // se desestructura para agregar el usuario a la variable hospital.    
+    }); // se desestructura para agregar el usuario al objeto hospital.    
     
     try {
       const hospitalDB = await hospital.save();
