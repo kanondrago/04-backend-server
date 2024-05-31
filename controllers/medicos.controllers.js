@@ -21,6 +21,7 @@ const crearMedico = async(req, res = response) => {
 
     const uid = req.uid
 
+    // Creando la instancia de medico, agregando con destructuración
     const medico = new Medico(
       {usuario: uid,...req.body}
     );
@@ -34,9 +35,10 @@ const crearMedico = async(req, res = response) => {
           medico: medicoDB
         })
     } catch (error) {
+      console.log(error);
       res.status(500).json({
-        ok: true,
-        msg: 'Error inesperado'
+        ok: false,
+        msg: 'Error inesperado  '
       })
     }
 
