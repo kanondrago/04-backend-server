@@ -7,6 +7,7 @@ const { generarJWT } = require('../helpers/jwt')
 
 const getHospitales = async (req, res = response) => {
 
+  // populate --> para tener mayor granularidad de los datos.
   const hospitales = await Hospital.find()
     .populate('usuario', 'nombre email role img password')
 
