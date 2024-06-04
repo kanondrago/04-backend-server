@@ -9,7 +9,7 @@ const getUsuarios = async (req, res) => {
   // agregando paramentro --> Llamado query param
   // el || 0  significa que envia un 0 si no hay valor
   const desde = await Number(req.query.desde) || 0;
-
+  // console.log(desde);
   /* 
   INICIO DE COMENTARIO
 
@@ -28,12 +28,18 @@ const getUsuarios = async (req, res) => {
 
   // INICIO DE CODIGO que sirve para hacer lo mismo que el codigo de bloque comentado
 
+  // Haciendo los dos procedimientos de manera simultanea.
+  // Aca hay dos promesas 
+  // Utilizamos desestructuración de arreglos 
   const [usuarios, total] = await Promise.all([
+
     Usuario
       .find({}, 'nombre email img role google')
       .skip(desde)
       .limit(5),
+
     Usuario.find().count()
+    
   ])
 
   // FIN DE CODIGO que sirve para hacer lo mismo que el codigo de bloque comentado
