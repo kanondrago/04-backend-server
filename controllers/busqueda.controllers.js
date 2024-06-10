@@ -38,41 +38,36 @@ const busquedaDocumentosColeccion = async (req, res) => {
 
     const regexp = new RegExp(busqueda, 'i');
 
-    // switch (tabla) {
-    //     case 'medicos':
-            
-    //         break;
+    let data = [];
 
-    //     case 'hospitales':
-            
-    //         break;
-    //     case 'usuarios':
-            
-    //         break;
+    switch (tabla) {
+        case 'medicos':
+            data = await Medico.find({nombre: regexp})
+                .populate('usuario', 'nombre img')
+                .populate('hospital', 'nombre img')
+        break;
+
+        case 'hospitales':
+            data = await Hospital.find({nombre: regexp})
+                .populate('usuario', 'nombre img')
+        break;
+
+        case 'usuarios':
+            data = await Usuario.find({nombre: regexp});
+        break;
     
-    //     default:
-    //         res.status(400).json({
-    //             ok: false,
-    //             msg: 'Se debe enviar /medicos , /hospitales, /usuarios'
-    //         })
-    // }
-
-
-
-    // APLICANDO BUSQUEDAS Y FILTROS
-
-    const [usuarios, medicos, hospitales] = await Promise.all([
-        Usuario.find({nombre: regexp}),
-        Medico.find({nombre: regexp}),
-        Hospital.find({nombre: regexp})
-    ])
-
+        default:
+            return res.status(400).json({ // Si no tiene return el servidor se cae
+                ok: false,
+                msg: 'Se debe enviar /medicos , /hospitales, /usuarios'
+            });
+    }
+    
     res.json({
         ok: true,
-        usuarios,
-        medicos,
-        hospitales
-      })
+        colección: tabla,
+        msg: data,
+    })
 
 }
 
