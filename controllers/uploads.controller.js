@@ -3,6 +3,7 @@ const { response } = require('express');
 
 // uuid -> para generar nombres de imagenes
 const { v4: uuidv4 } = require('uuid');
+const { actualizarImagen } = require('../helpers/actualizar-imagen');
 
 
 const uploadsFile = async (req, res = response) => {
@@ -58,6 +59,9 @@ const uploadsFile = async (req, res = response) => {
                 msg: 'Error al mover la imagen',
             });
         }
+
+        // Actualizar la BBDD
+        actualizarImagen(tipo, id, nombreArchivo);
     
         return res.status(200).json({
             ok: true,
@@ -67,27 +71,6 @@ const uploadsFile = async (req, res = response) => {
             nombreArchivo,
         });      
     });
-
-    // switch (tipo) {
-        
-    //     case 'usuarios':
-    //     console.log('1')
-    //     break;
-
-    //     case 'medicos':
-    //     console.log('2')
-    //     break;
-
-    //     case 'hospitales':
-    //     console.log('3')
-    //     break;
-        
-    //     default:
-    //         break;
-    // }
-
-
-
 }
 
 module.exports = {
