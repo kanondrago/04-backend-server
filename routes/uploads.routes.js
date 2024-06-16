@@ -12,6 +12,7 @@ const { validarCampos } = require('../middlewares/validar-campos');
 
 
 const router = Router();
+// Antes de que se ejecute el put 
 router.use( expressFileUpload() );// disparando el middleware fileUpload
 
 
