@@ -7,7 +7,7 @@
 const { Router } = require('express');
 // Implementando un middleware
 const expressFileUpload = require('express-fileupload');
-const { uploadsFile } = require('../controllers/uploads.controller')
+const { uploadsFile, retornaImagen } = require('../controllers/uploads.controller')
 const { validarCampos } = require('../middlewares/validar-campos');
 
 
@@ -17,6 +17,8 @@ router.use( expressFileUpload() );// disparando el middleware fileUpload
 
 
 router.put('/:tipo/:id', [validarCampos], uploadsFile);
+
+router.get('/:tipo/:picture', [validarCampos], retornaImagen);
 
 module.exports = router;
 

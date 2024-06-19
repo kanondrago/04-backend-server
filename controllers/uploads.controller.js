@@ -5,6 +5,10 @@ const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
 const { actualizarImagen } = require('../helpers/actualizar-imagen');
 
+// Sirve para construir path completos
+const path = require('path');
+const fs = require('fs');
+
 
 const uploadsFile = async (req, res = response) => {
 
@@ -73,6 +77,24 @@ const uploadsFile = async (req, res = response) => {
     });
 }
 
+const retornaImagen = ( req, res = response ) => {
+    const tipo = req.params.tipo;
+    const picture = req.params.picture;
+
+    const pathPicture = path.join(__dirname, `../uploads/${tipo}/${picture}`)
+
+    // imagen por defecto
+    if(fs.existsSync(pathPicture)) {
+        res.sendFile(pathPicture);
+    } else {
+        const pathPicture = path.join(__dirname, `../uploads/no-img.jpg`)
+        res.sendFile(pathPicture);
+    }
+
+
+}
+
 module.exports = {
     uploadsFile,
+    retornaImagen,
 }
