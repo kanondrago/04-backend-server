@@ -47,22 +47,85 @@ const crearHospital = async(req, res = response) => {
 
 const actualizarHospital = async (req, res = response) => {
 
-    res.json({
-        ok: true,
-        msg: 'actualizando hospitales'
+    // Extraemos el id de los parametros del req
+    const id = req.params.id;
+    // Se tiene acceso al uid porque pasa por la autenticaión del JWT
+    const uid = req.uid;
+
+    try {
+
+      // Encontramos si hay en la base de datos
+      const hospital = await Hospital.findById(id);
+
+      if(!hospital) {
+        return res.status(400).json({
+          ok: false,
+          msg: 'Hospital no encontrado',
+        })      
+      }
+
+      // Metodo 1 de actualizar un campo 
+      // hospital.nombre = req.body.nombre;
+
+      // Metodo 2 si hay varios campos para actualizar
+      const cambiosHospital = {
+        ...req.body,
+        usuario: uid,
+      }
+
+      // Ahora guardamos en la base de datos ....XD
+      const hospitalActualizado = await Hospital.findByIdAndUpdate(id, cambiosHospital, { new: true });
+
+      res.json({
+          ok: true,
+          msg: 'actualizando hospitales',
+          hospital: hospitalActualizado,
+        })
+
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({
+        ok: false,
+        msg: 'Hablar con el administrador',
       })
+    }
+
     
 }
 
 const eliminarHospital = async (req, res=response) => {
 
-    res.json({
+    const id = req.params.id;
+    
+    try {
+
+      const hospital = await Hospital.findById(id);
+
+      if(!hospital){
+        return res.status(404).json({
+          ok: true,
+          msg: 'Hospital no encontrado, no se pudo eliminar el hospital '
+        })
+      }
+
+      // Eliminando el hospital por un id generico
+      // Esto actualiza la base de datos
+      await Hospital.findByIdAndDelete(id);
+
+      res.json({
         ok: true,
-        msg: 'eliminando hospitales'
+        msg: 'Hospital eliminado',
+      });
+      
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        ok: false,
+        msg: 'Error, contacto con el administrador'
       })
+    }
     
 }
-
 
 
 module.exports = {
