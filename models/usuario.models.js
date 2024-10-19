@@ -2,7 +2,7 @@
 // haciendo destructuring
 const {Schema, model} = require('mongoose');
 
-// definición del esquema
+// definición del esquema intancia de la clase Schema
 const UsuarioSchema = Schema({
     nombre: {
         type: String,

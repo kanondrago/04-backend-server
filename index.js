@@ -13,6 +13,9 @@ const app = express()
 // Creación de lista blancas y negras
 app.use( cors() );
 
+// carpeta publica - Usando un middleware
+app.use(express.static('public'))
+
 // lectura y parseo del body para leer los requests (Middleware)
 // Colocar antes de las rutas
 app.use(express.json());
