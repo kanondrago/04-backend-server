@@ -52,6 +52,7 @@ const actualizarHospital = async (req, res = response) => {
     // Se tiene acceso al uid porque pasa por la autenticaión del JWT
     const uid = req.uid;
 
+
     try {
 
       // Encontramos si hay en la base de datos

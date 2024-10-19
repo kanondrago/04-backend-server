@@ -48,19 +48,75 @@ const crearMedico = async(req, res = response) => {
 
 const actualizarMedico = async (req, res = response) => {
 
-    res.json({
+    // Extraemos el id de medicos de los parametros del req
+    const id = req.params.id;
+    // Se tiene acceso al uid del usuario porque pasa por la autenticaión del JWT
+    const uid = req.uid;
+
+    try {
+      const medico = await Medico.findById(id);
+
+      if(!medico) {
+        return res.status(404).json({
+          ok: false,
+          msg: 'El medico no existe',
+        })
+      }
+
+      const cambiosMedico = {
+        ...req.body,
+        usuario: uid,
+      }
+
+      const medicoActualizado = await Medico.findByIdAndUpdate(id, cambiosMedico, { new: true });
+
+      res.status(200).json({
         ok: true,
-        msg: 'actualizando medicos'
+        msg: 'Actualización de datos del Médico exitosa',
+        medico: medicoActualizado,
       })
+
+
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({
+        ok: true,
+        msg: 'Error en la actualización',
+      })
+    }
     
 }
 
 const eliminarMedico = async (req, res=response) => {
 
-    res.json({
+    const id = req.params.id;
+
+    try {
+      const medico = await Medico.findById(id);
+      
+      if(!medico) {
+        return res.status(404).json({
+          ok: false,
+          msg: 'El médico no existe',
+        })
+      }
+
+      // Eliminando el médico, las buenas practicas indican que no se debe eliminar 
+      // En su lugar se debe desactivar un estado a modo inactivo
+      await Medico.findByIdAndDelete(id);
+
+      res.status(200).json({
         ok: true,
-        msg: 'eliminando medicos'
+        msg: 'Médico eliminado',
       })
+
+    } catch (error) {
+      console.log(error)      
+      res.status(500).json({
+          ok: false,
+          msg: 'Error de procedimiento'
+        })
+    }
     
 }
 

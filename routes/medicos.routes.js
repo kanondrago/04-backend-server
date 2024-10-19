@@ -25,10 +25,16 @@ router.post('/', [
 ], crearMedico);
 
 // actualizar un medico y también se configura sus validaciones en la sección de middleware
-router.put('/:id', [], actualizarMedico)
+router.put('/:id', [
+    validarJWT,
+    check('nombre', 'El nombre del medico es necesario').not().isEmpty(),
+    validarCampos,
+], actualizarMedico)
 
 // eliminar un medico con id
-router.delete('/:id', eliminarMedico)
+router.delete('/:id', [
+    validarJWT,
+],eliminarMedico)
 
 
 // exportando el router
