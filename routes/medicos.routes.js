@@ -14,7 +14,10 @@ const { getMedicos, crearMedico, actualizarMedico, eliminarMedico } = require('.
 const router = Router();
 
 // obtener todos los medicos
-router.get('/', getMedicos)
+router.get('/', [
+    validarJWT,
+    validarCampos,
+],getMedicos)
 
 // crear medico
 router.post('/', [

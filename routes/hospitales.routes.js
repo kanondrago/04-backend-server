@@ -14,7 +14,9 @@ const { getHospitales, crearHospital, actualizarHospital, eliminarHospital } = r
 const router = Router();
 
 // obtener todos los hospitales
-router.get('/', getHospitales)
+router.get('/', [
+    validarJWT,
+],getHospitales)
 
 // crear un hospital
 router.post('/', [
