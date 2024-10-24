@@ -17,7 +17,7 @@ const router = Router();
 router.get('/', [
     validarJWT,
     validarCampos,
-],getMedicos)
+],getMedicos) 
 
 // crear medico
 router.post('/', [
