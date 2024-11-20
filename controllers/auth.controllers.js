@@ -55,29 +55,44 @@ const login = async(req, res = response) => {
 
 const googleSignIn = async(req, res = response) => {
 
+    const googleToken = req.body.token;
+
+
     try {
 
-        const token = req.body.token;
+        const { name, email, picture } = await googleVerify( googleToken );
+        const usuarioDB = await Usuario.findOne({email});
 
-        console.log('token: ', token)
+        //creando el usuario
+        let usuario;
 
-        const googleUser = await googleVerify(token);
+        // Si el usuario es nuevo se crea uno
+        if(!usuarioDB) {
+            usuario = new Usuario({
+                nombre: name,
+                email: email,
+                password: '@@@###',
+                img: picture,
+                google: true,
+            })
+        } else {
+            // El usuario si existe
+            usuario = usuarioDB;
+            usuario.google = true;
+        }
 
-        const {email, name, picture} = googleUser;
-    
-        res.json({
+        // Guardando el usuario en la base de datos
+        const token = await generarJWT(usuario.id);
+
+        res.status(200).json({
             ok: true,
-            msg: googleUser,
-            email: email,
-            name: name,
-            picture: picture,
             token: token,
-        })
+        });
         
     } catch (error) {
-        res.status(400).json({
+        res.status(401).json({
             ok: false,
-            msg: 'Token de Google no es correcto'
+            msg: 'El token de Google no es correcto'
         })
     }
 
