@@ -57,11 +57,14 @@ const googleSignIn = async(req, res = response) => {
 
     const googleToken = req.body.token;
 
+    // console.log('googleToken: ', googleToken);
 
     try {
 
         const { name, email, picture } = await googleVerify( googleToken );
         const usuarioDB = await Usuario.findOne({email});
+
+        // console.log('usuarioDB: ', usuarioDB);
 
         //creando el usuario
         let usuario;
@@ -82,11 +85,15 @@ const googleSignIn = async(req, res = response) => {
         }
 
         // Guardando el usuario en la base de datos
+        await usuario.save();
+
+        // generando un token
         const token = await generarJWT(usuario.id);
 
         res.status(200).json({
             ok: true,
             token: token,
+            usuario: usuario,
         });
         
     } catch (error) {
