@@ -9,6 +9,7 @@ const { Router } = require('express');
 const expressFileUpload = require('express-fileupload');
 const { uploadsFile, retornaImagen } = require('../controllers/uploads.controller')
 const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 
 const router = Router();
@@ -16,7 +17,7 @@ const router = Router();
 router.use( expressFileUpload() );// disparando el middleware fileUpload
 
 
-router.put('/:tipo/:id', [validarCampos], uploadsFile);
+router.put('/:tipo/:id', [validarJWT, validarCampos], uploadsFile);
 
 router.get('/:tipo/:picture', [validarCampos], retornaImagen);
 
