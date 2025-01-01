@@ -127,7 +127,7 @@ const actualizarUsuario = async (req, res = response) => {
 
       if(existeEmail){
         // Si el mail existe en la base de datos, aquí se termina el código y envia un mensaje al cliente
-        return res.json({
+        return res.status(400).json({
           ok: false,
           msg: 'El correo electrónico ya esta registrado en la base de datos'
         })
