@@ -66,7 +66,7 @@ const busquedaDocumentosColeccion = async (req, res) => {
     res.json({
         ok: true,
         colección: tabla,
-        msg: data,
+        resultados: data,
     })
 
 }
