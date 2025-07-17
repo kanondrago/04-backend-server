@@ -13,7 +13,7 @@ const getHospitales = async (req, res = response) => {
 
   res.json({
     ok: true,
-    msg: hospitales,
+    hospitales: hospitales,
   })
 
 }
@@ -21,6 +21,8 @@ const getHospitales = async (req, res = response) => {
 const crearHospital = async(req, res = response) => {
 
     const uid = req.uid;
+
+    console.log('uid: ',uid)
 
     // se desestructura para agregar el usuario al objeto hospital.    
     const hospital = new Hospital({
