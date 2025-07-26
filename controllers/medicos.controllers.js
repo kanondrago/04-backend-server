@@ -8,7 +8,7 @@ const getMedicos = async (req, res = response) => {
 
   const medicos = await Medico.find()
     .populate('usuario', 'nombre')
-    .populate('hospital', 'nombre')
+    .populate('hospital', 'nombre img');
 
   res.json({
     ok: true,
